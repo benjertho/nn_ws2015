@@ -29,6 +29,7 @@
 \usepackage{listings}
 \usepackage{amssymb}
 \usepackage{graphicx}
+\graphicspath{ {/home/poulastya/Documents/Assignments/Neural Network/git_as/ex5} }
 
 \usepackage{sectsty} % Allows customizing section commands
 \allsectionsfont{\raggedright \normalfont} % Make all sections centered, the default font and small caps
@@ -104,8 +105,16 @@ an outline or a summary.}
 \end{itemize}
 
 \section{ (3.1) }
-    
-\subsection{ (a) }
+\[\varepsilon (w) = \frac{1}{2}.\sigma^{2} -r_{xd}.w + \frac{1}{2}r_{x}w^{2}\] \\
+Calculating Descent
+\[\bigtriangledown \varepsilon (w) = g = r_{x}w - r_{xd} \]\\
+Applying Steepest Descent
+\[w(n+1) = w(n) - \eta .g(n) \]\\ 
+where g(n) is the gradient and $\eta$ is the learning rate
+\[w(n+1) = w(n) - \eta .[r_{x}w(n) - r_{xd}]\] \\ 
+By applying steepest descent we get the expression for the change in weight
+\[\bigtriangleup w(n) = \eta .[r_{x}w(n) - r_{xd}]\]
+
 %\FloatBarrier
 %\begin{figure}[h]
 %\centering
@@ -114,9 +123,38 @@ an outline or a summary.}
 %\end{figure}
 %\FloatBarrier
 
-\subsection{ (b) }
-
 \section{ (3.2) }
+\subsection{a}
+\[w = \begin{bmatrix} w1\\ w2 \end{bmatrix}\] \\ 
+\[w^{T} = \begin{bmatrix} w1 & w2 \end{bmatrix} \]\\ 
+\[r_{xd} = \begin{bmatrix}
+
+ 0.8182\\ 0.354 \end{bmatrix} \]\\ 
+\[R_{x} = \begin{bmatrix} 1 & 0.8182\\ 0.8182 & 1 \end{bmatrix}\] \\ 
+
+\[\varepsilon(w) = \frac{1}{2}.\sigma^{2} - r^{T}_{xd}.w + \frac{1}{2}w^{T}R_{x}w\] \\
+After calculating the gradient of the equation and equating it to 0 we get the optimal values of \\
+$w^{*}$ as the point where the slope is zero is either minima or maxima
+ \[\bigtriangledown \varepsilon (w) = \begin{bmatrix} -0.8182 + w1 + 0.8182w2\\ -0.354 + w1 + 0.8182w1 \end{bmatrix} = 0 \]\\
+If we differentiate the above equation again using the gradient we will see that the resulting \\ matrix is same as R i.e. positive hence proving that the point we found is minima 
+\[ w^{*} = \begin{bmatrix} 1.599\\ -0.95 \end{bmatrix}\]
+
+
+\subsection{b}
+\textbf{Code is provided at the end}
+
+
+\includegraphics[scale=0.4]{LearningRate_3.png}
+\[ w^{*} = \begin{bmatrix} 1.58164097\\ -0.93693741 \end{bmatrix}\]
+for learning rate 0.3 \\
+
+\includegraphics[scale=0.4]{LearningRate1.png}
+\[ w^{*} = \begin{bmatrix} 1.5993919 \\ -0.95371617 \end{bmatrix}\]
+for learning rate 1 \\
+
+So we can see varying the learning rate does not have effect on the optimal value as they are \\
+almost equal
+
 \section{ (3.4) }
 The LMS algorithm converges for 
 $$0 < \eta < \frac{2}{\lambda_{max}} $$ 
@@ -187,4 +225,52 @@ $$ \pmb{\hat w}(n+1) = \pmb{\hat w}(n) + \eta\pmb{x}(n)e(n) $$
 which can be seen to equal 
 $$\pmb{\hat w}(n) + \eta\pmb{x}(n)(d(n) - \pmb{x}^T(n)\pmb{w}(n)) $$
 However, the $\pmb{R_x}$ term is still not accounted for.
+
+\section{Code}
+\begin{verbatim}
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Nov  7 12:33:53 2015
+
+@author: poulastya
+"""
+
+import sympy
+import numpy
+import numpy as np
+from numpy import *
+from sympy import *
+import math
+import matplotlib.pyplot as plt
+from matplotlib import *
+
+"""
+ Setting Initial weights at 20 and 30 and chaning the learning
+rates
+"""
+w = np.matrix(([20],[30]))
+l_r = 1
+x = []
+y = []
+
+gradient = np.matrix(([l_r*(-0.8182+w.item(0)+0.8182*w.item(1))],
+
+[l_r*(-0.354+w.item(1)+0.8182*w.item(0))]))
+
+while (gradient.item(0) > 0.001 or gradient.item(0) < -0.001):
+    w = w - gradient
+    gradient = np.matrix(([l_r*(-0.8182+w.item(0)+0.8182*w.item(1))],
+    
+    [l_r*(-0.354+w.item(1)+0.8182*w.item(0))]))
+    #print w    
+    x.append(w.item(0))
+    y.append(w.item(1))
+
+print '####'
+print w    
+
+plt.plot(x,y,'b--')
+
+plt.show()
+\end{verbatim}
 \end{document}
