@@ -138,8 +138,53 @@ This particular LMS problem will converge for
 $$ 0 < \eta <  \frac{2}{1.5} = 1.33 $$
 \section{ (3.8) }
 \subsection{ (a) }
+Given 
+$$ J(\pmb{w}) = \frac{1}{2}E[e^2(n)] = \frac{1}{2}E\left[(d(n)-\pmb{x}^T(n)\pmb{w})^2\right]$$
+
+and E is a linear function,
+
+$$ J(\pmb{w}) = \frac{1}{2} E\left[ d^2(n)-2\d(n) \pmb{x}(n)\pmb{w} + \pmb{x}(n)\pmb{w}^T\pmb{x}^T(n)\pmb{w} \right]$$
+$$ = 
+\frac{1}{2}  E\left[ d^2(n)\right] - 
+\frac{1}{2}  2  E\left[d(n) \pmb{x}(n) \right]\pmb{w} + 
+\frac{1}{2}  \pmb{w}^T  E\left[\pmb{x}(n) \pmb{x}^T(n) \right]\pmb{w}$$
+
+$$ = 
+\frac{1}{2}  \sigma_d^2 - 
+\pmb{r}_{\pmb{x}d}^T\pmb{w} + 
+\frac{1}{2}  \pmb{w}^T \pmb{R_x}  \pmb{w}$$
+where
+$$ \sigma_d^2 = E\left[ d^2(n)\right]$$
+$$ \pmb{r}_{\pmb{x}d} = E\left[ \pmb{x}(n) d(n) \right]$$
+$$ \pmb{R_x} = E\left[\pmb{x}(n) \pmb{x}^T(n) \right]$$
 \subsection{ (b) }
+Taking the gradient wrt to $\pmb{w}$ of  
+$$
+J(\pmb{w}) = 
+\frac{1}{2}  \sigma_d^2 - 
+\pmb{r}_{\pmb{x}d}^T\pmb{w} + 
+\frac{1}{2}  \pmb{w}^T \pmb{R_x}  \pmb{w}$$
+gives 
+$$
+\nabla J(\pmb{w}) = 
+- \pmb{r}_{\pmb{x}d} + 
+ \pmb{R_x}  \pmb{w} = g$$
+ derivating again wrt $\pmb{w}$ we arrive at the Hessian
+ $$  \pmb{H} =  \pmb{R_x}$$
+ because of the transpose relation of the two $\pmb{w}$ terms and because 
+ $$ \pmb{H}(f)(x)=\pmb{J}(\nabla f)(x)$$
 \subsection{ (c) }
+$$ e(n) = d(n) - \pmb{x}^T(n)\pmb{w}(n)$$
+Hence
+$$ \frac{\partial e(n)}{\partial \pmb{w}(n)} = -\pmb{x}(n) $$
+the estimate of the gradient vector is then 
 
-
+$$ \pmb{\hat g}(n) = -\pmb{x}(n)e(n) $$
+and the steepest descent is described by
+$$ \pmb{w}(n+1) = \pmb{w}(n) - \eta\pmb{g}(n)$$
+we can formulate 
+$$ \pmb{\hat w}(n+1) = \pmb{\hat w}(n) + \eta\pmb{x}(n)e(n) $$
+which can be seen to equal 
+$$\pmb{\hat w}(n) + \eta\pmb{x}(n)(d(n) - \pmb{x}^T(n)\pmb{w}(n)) $$
+However, the $\pmb{R_x}$ term is still not accounted for.
 \end{document}
