@@ -118,6 +118,24 @@ an outline or a summary.}
 
 \section{ (3.2) }
 \section{ (3.4) }
+The LMS algorithm converges for 
+$$0 < \eta < \frac{2}{\lambda_{max}} $$ 
+where $\lambda_{max}$ is the largest eigen value of the correlation matrix.
+
+Given the correlation matrix
+
+$$
+R_x =  
+\left[ 
+\begin{array}{cc}
+1 & 0.5 \\ 
+0.5 & 1 
+\end{array} 
+\right]
+$$
+The SVD of $R_x$ gives 1.5 as the the largest eigen value
+This particular LMS problem will converge for 
+$$ 0 < \eta <  \frac{2}{1.5} = 1.33 $$
 \section{ (3.8) }
 \subsection{ (a) }
 \subsection{ (b) }
